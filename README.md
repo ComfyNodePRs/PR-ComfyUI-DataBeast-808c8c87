@@ -2,13 +2,37 @@
 This repository offers various nodes for data-driven processing in Comfy-UI.
 
 ## Notice:
-* V1.0 First release.
+* V0.1 Alpha release: While useful, the API of this module has not been solidified. Use at your own risk.
 
 ## Installation
 
 1. Clone the repository:
 `git clone https://github.com/hanoixan/ComfyUI-DataBeast.git`
 to your ComfyUI `custom_nodes` directory
+
+## How to Use These Nodes
+
+### Loading and accessing data
+* DBLoadData loads the contents of a .csv, .json, or .yml file (for any other extension, the YAML parser is used) into a single dictionary that is exposed as a DBItem type. This contains a single 'item' member, which references the loaded dictionary.
+* You can access individual value types of this dictionary through DBGetValue, which will return them as a string.
+* DBGetBatchList lets you access any list in the root dictionary, and converts it into a ComfyUI batch list. The values of the current item in batch's current iteration can then be accessed through DBGetValue.
+
+### Manipulating data
+* DBConvertToInt, DBConvertToFloat, or DBConvertToString can be used to further cast the string value returned from DBGetValue into the target type.
+* DBFloatExpression and DBStringExpression are convenience nodes for manipulating float and string data, respectively.
+
+### Expression syntax
+* For DBFloatExpression and DBStringExpression, the expressions are Python expressions limited to the passed in values a,b,c, and d.
+  * Ex: The float expressions `a ** b` or  `(a + b / c) * d` or the string expressions `a + b` or `f"{a}_{b}"`
+* For DBGetValue and DBGetBatchList, the key expression is evaluated after concatenating it onto the type held by the node.
+  * Ex: A DBGetValue is connected to the root dictionary from a DBLoadData. The DBGetValue's key expression is `['defs']['color_list'][23]`. This means that the node will return the string representation of `doc_root['defs']['color_list'][23]`.
+  * Ex: A .csv file is loaded. Because .csv files are automatically turned into a dictionary with a single `'items'` key containing the contents of the file as a list, the key expression `['items'][0]` will return the first item in this list as a string.
+
+## Safety
+
+These nodes use Python's eval(), which is in itself dangerous. To protect against malicious code, RestrictedPython is used to compile the bytecode for each 
+expression, only allowing access to the passed in variables, `safe_globals`, and a simple `_getitem_` implementation. This should mitigate against malicious code and 
+make it generally safe to use, although there is still the possibility of a bad actor creating an expression that causes catastrophic CPU usage.
 
 ## Nodes
 
@@ -235,3 +259,6 @@ While this is a simple example, you can use these primitives to generate lots of
 
 ## Examples
 TBD
+
+## Todo:
+* To unify representations, DBGetValue should return a DBItem, and require a DBConvertTo<Type> node to access the value.
