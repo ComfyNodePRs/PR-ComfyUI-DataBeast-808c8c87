@@ -246,7 +246,7 @@ You may notice that 'cfg' is being specified as a string, but we'd really like i
 ```
 
 'to_float' is another built-in db_exec function, and that specification dictionary is replaced with the float cast of the given string. After running, the input file
-will effectively be stored as:
+will effectively be parsed, processed, and stored in memory as:
 ```
 defs:
   color1: yellow
