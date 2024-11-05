@@ -177,7 +177,7 @@ A future change may be to add a custom parser and/or detect and end long computa
 
 ## The input data file format
 
-The data file can be either CSV, JSON, or YAML. These are parsed and stored internally as a Python dictionary representation. This documentation uses YML exclusively for examples.
+The data file can be either CSV, JSON, or YAML. These are parsed and stored internally as a Python dictionary representation. This documentation uses YAML exclusively for examples.
 
 The simplest usage of a file and DataBeast nodes is to access the document data by key, and/or batch a list of items in the document.
 
