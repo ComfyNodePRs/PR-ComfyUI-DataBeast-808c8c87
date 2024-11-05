@@ -7,9 +7,12 @@ This repository offers various nodes for data-driven processing in Comfy-UI.
 
 ## Installation
 
-1. Clone the repository:
-`git clone https://github.com/hanoixan/ComfyUI-DataBeast.git`
+1. Clone the repository: `git clone https://github.com/hanoixan/ComfyUI-DataBeast.git`
 to your ComfyUI `custom_nodes` directory
+2. Install dependencies: `pip install -r requirements.txt`
+3. Restart the ComfyUI server
+
+Once this project is stable, it will be available from the Custom Nodes Manager for easier installation.
 
 ## How to Use These Nodes
 
