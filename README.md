@@ -82,6 +82,7 @@ A future change may be to add a custom parser and/or detect and end long computa
 > * The DBItem representation of the requested value.
 
 > **DBGetBatchList**
+>
 > Get a list from some key expression in the source DBItem. The list will drive batching in ComfyUI.
 > 
 > Params:
@@ -174,11 +175,9 @@ A future change may be to add a custom parser and/or detect and end long computa
 > 
 > * The result of the string expression.
 
-## Other features
+## The input data file format
 
-### The data file format
-
-The data file can be either CSV, JSON, or YAML. These are parsed and stored internally as a Python dictionary representation.
+The data file can be either CSV, JSON, or YAML. These are parsed and stored internally as a Python dictionary representation. This documentation uses YML exclusively for examples.
 
 The simplest usage of a file and DataBeast nodes is to access the document data by key, and/or batch a list of items in the document.
 
