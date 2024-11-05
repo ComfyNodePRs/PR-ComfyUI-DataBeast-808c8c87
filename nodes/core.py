@@ -153,38 +153,3 @@ valid_db_exec_functions = {
     'generate_permutation_list': generate_permutation_list,
     'to_float': to_float
 }
-
-
-
-#### REMOVE
-
-# def resolve_references_r(obj, root_obj, evaluated):
-
-#     def eval_expression(expression, root_obj):
-#         # avoid infinite recursion
-#         if expression in evaluated:
-#             return ''
-
-#         evaluated[expression] = True
-
-#         try:
-#             full_expression = f"root_obj{expression}"
-#             local_vars = {"root_obj": root_obj}
-#             evaluated_result = safe_eval(full_expression, local_vars, "<resolve references>")
-#             return evaluated_result
-#         except Exception as ex:
-#             return ''
-
-#     if isinstance(obj, str):
-#         return REPLACE_EXPR_PATTERN.sub(lambda m: eval_expression(m.group(2), root_obj), obj)
-#     elif isinstance(obj, dict):
-#         return {k: resolve_references_r(v, root_obj, evaluated) for k,v in obj.items()}
-#     elif isinstance(obj, list):
-#         return [resolve_references_r(item, root_obj, evaluated) for item in obj]
-#     else:
-#         return obj
-
-# def resolve_references(obj):
-#     # recursively find all strings in obj and replace ${item expression} with result. avoid infinite recursion.
-#     evaluated = {}
-#     return resolve_references_r(obj, obj, evaluated)
