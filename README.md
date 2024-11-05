@@ -13,19 +13,19 @@ to your ComfyUI `custom_nodes` directory
 ## Nodes
 
 ### Conversion
-** DBConvertToInt
+**DBConvertToInt**
 Params:
 * input: any type
 Returns:
 * The integer representation if possible, 0 if not
 
-** DBConvertToFloat
+**DBConvertToFloat**
 Params:
 * input: any type
 Returns:
 * The float representation if possible, 0.0 if not
 
-** DBConvertToString
+**DBConvertToString**
 Params:
 * input: any type
 * filesafe: If true, provide an ultra-shortened version of the full string that saves space and makes it useful for creating descriptive file names by removing vowels, removing non-alphanumeric characters, and appending a 4-hex hash when strings exceed 64 characters.
@@ -33,18 +33,22 @@ Returns:
 * The string representation if possible, 0 if not
 
 ### General
-** DBLoadData
-Load data from a .csv, .json, or .yml file. This data can be accessed using Python dict and array expressions using DBGetValue and DBGetBatchList
-For .csv files, all rows are represented in a list under the top key value 'items'. I.e., use ['items'] as your DBGetBatchList key.
+**DBLoadData**
+Load data from a .csv, .json, or .yml file. It will use the correct parser based on the file extension for .csv and .json. Any other extension will fall back to the 
+.yml parser. This data can be accessed using Python dict and array expressions using DBGetValue and DBGetBatchList
+For .csv files, all rows are represented in a list under the top key value 'items'. I.e., use `['items']` as your DBGetBatchList key.
 Params:
 * path: Path to file to load. .json and .csv are treated as their formats, anything else is interepreted as YAML.
-* filter: Pattern filter. If exclusive is true, only include lines that DO NOT match this regex filter. If not exclusive, include ONLY lines that match this filter. If using capture groups and not exclusive, all capture groups will be concatenated into the final text for that line.
-  * Ex: ([^#]+)#? will match initial text until a #, and then ignore the rest. Everything in the capture group is retained.
-* exclusive: Exclude with pattern. If false, include only lines with the filter regex pattern, if there is one.
+* filter: Pattern filter. If exclusive is true, only include lines that DO NOT match this regex filter. If not exclusive, include ONLY lines that match this filter. 
+  If using capture groups and not exclusive, all capture groups will be concatenated into the final text for that line. If empty, allow everything.
+  * Ex: `([^#]+)#?` will match initial text until a #, and then ignore the rest. Everything in the capture group is retained.
+  * Ex: If you want to embed data into another text file, create a unique prefix for the data lines, and use this filter to extract only those lines: 
+    `[ \t]*mydata:(.*)` will filter everything after the `mydata:` prefix.
+* exclusive: Exclude with pattern if true, retaining everything else. If false, include only lines with the filter regex pattern, if there is one.
 Returns:
 * DBItem referencing a dictionary of the entire file that was loaded. 
 
-** DBGetValue
+**DBGetValue**
 Return the string representation of a simple value relative to the DBItem, using Python array access notation.
 Params:
 * source: Source item to query. This can come from DBLoadData or DBGetBatchList.
@@ -54,7 +58,7 @@ Params:
 Returns:
 * A string representation of the requested simple value.
 
-** DBGetBatchList
+**DBGetBatchList**
 Get a list from some key expression in the source DBItem. The list will drive batching in ComfyUI.
 Params:
 * source: Source item to get data from.
@@ -64,7 +68,7 @@ Returns:
 * Return a list of items from the key expression, in a way that ComfyUI will use as a batch list.
 
 ### Math
-** DBFloatExpression
+**DBFloatExpression**
 Evaluate a float expression.
 Params:
 * expression: Python math expression taking any of inputs a,b,c,d.
@@ -76,7 +80,7 @@ Returns:
 * The result of the float expression.
 
 ### String
-** DBStringExpression
+**DBStringExpression**
 Evaluate a string expression.
 * expression: Python string expression taking any of inputs a,b,c,d.
 * a: Input a.
@@ -134,7 +138,7 @@ items:
     prompt:
       - "A puppy wearing a ${['defs']['color1']} hat."
       - "A cat wearing a ${['defs']['color2']} tie."
-      - "A bird weawring a ${['defs']['color3']} star."
+      - "A bird wearing a ${['defs']['color3']} star."
     cfg:
       min: 2
       max: 3
@@ -182,13 +186,13 @@ items:
     cfg: 2.666,
   - prompt: "A cat wearing a blue tie."
     cfg: 3.0,
-  - prompt: "A bird weawring a silver star."
+  - prompt: "A bird wearing a silver star."
     cfg: 2.0,
-  - prompt: "A bird weawring a silver star."
+  - prompt: "A bird wearing a silver star."
     cfg: 2.333,
-  - prompt: "A bird weawring a silver star."
+  - prompt: "A bird wearing a silver star."
     cfg: 2.666,
-  - prompt: "A bird weawring a silver star."
+  - prompt: "A bird wearing a silver star."
     cfg: 3.0,
 ```
 
