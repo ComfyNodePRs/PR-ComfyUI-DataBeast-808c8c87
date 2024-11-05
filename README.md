@@ -23,7 +23,7 @@ Once this project is stable, it will be available from the Custom Nodes Manager 
 
 ### Manipulating data
 * DBConvertToInt, DBConvertToFloat, or DBConvertToString can be used to further cast the string value returned from DBGetItem into the target type.
-* DBFloatExpression and DBStringExpression are convenience nodes for manipulating float and string data, respectively.
+* DBFloatExpression and DBStringExpression are convenience nodes for manipulating float and string data, respectively. They take the raw float and string types as inputs, not DBItems.
 
 ### Expression syntax
 * For DBFloatExpression and DBStringExpression, the expressions are Python expressions limited to the passed in values a,b,c, and d.
