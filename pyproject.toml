@@ -1,0 +1,14 @@
+[project]
+name = "comfyui-databeast"
+description = "This extension provides convenience nodes for batch processing."
+version = "1.0"
+license = { file = "LICENSE" }
+dependencies = ["pyyaml", "RestrictedPython"]
+
+[project.urls]
+Repository = "https://github.com/hanoixan/ComfyUI-DataBeast"
+
+[tool.comfy]
+PublisherId = "hanoixan"
+DisplayName = "ComfyUI DataBeast"
+Icon = ""
