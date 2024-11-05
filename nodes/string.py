@@ -1,4 +1,4 @@
-from .core import any_typ, DBItem, safe_eval
+from .core import DBItem, safe_eval
 
 class DBStringExpression:
     @classmethod

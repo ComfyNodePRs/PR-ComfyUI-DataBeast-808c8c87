@@ -3,19 +3,11 @@ import itertools
 
 from RestrictedPython import compile_restricted, safe_globals
 
-# inspired any-type solution from Inspire-Pack
-
-class AnyType(str):
-    def __ne__(self, __value: object) -> bool:
-        return False
-
-any_typ = AnyType("*")
-
 #
 
 class DBItem:
-    def __init__(self):
-        self.item=None
+    def __init__(self, value):
+        self.item=value
 
 #
 

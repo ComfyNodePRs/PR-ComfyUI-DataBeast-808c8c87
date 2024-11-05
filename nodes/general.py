@@ -120,38 +120,33 @@ class DBLoadData:
             pass
             # TODO: popup an error
 
-        out_root_item = DBItem()
-        out_root_item.item = out_root
+        return (DBItem(out_root),)
 
-        return (out_root_item,)
-
-class DBGetValue:
+class DBGetItem:
     @classmethod
     def INPUT_TYPES(s):
         return {"required": {
                     "source": ("DB_ITEM", {"defaultInput": None, "tooltip": "Source item to query."}),
                     "expression": ("STRING", {"defaultInput": None, "tooltip": "The expression to apply to the source, if necessary. \nEx: To get the 2nd index of the key \"foo\" assuming \nthe source is a table, the expression is: [\"foo\"][1]"}),
-                    "default": ("STRING", {"defaultInput": None, "tooltip": "The value to use if the key doesn't exist."}),
                     },
                 }
 
-    RETURN_TYPES = ("STRING",)
+    RETURN_TYPES = ("DB_ITEM",)
     RETURN_NAMES = ("value",)
     FUNCTION = "exec"
     CATEGORY = "DataBeast"
 
     def exec(self, source, expression, default):
-        value = default
-        value = ""
+        value = None
         try:
             source_item = source.item
             full_expression = "source_item{}".format(expression)
             local_vars = {"source_item": source_item}
-            value = str(safe_eval(full_expression, local_vars, "<DBGetValue instance>"))
+            value = str(safe_eval(full_expression, local_vars, "<DBGetItem instance>"))
         except Exception as ex:
             # TODO: popup an error
             pass
-        return (value,)
+        return (DBItem(value),)
 
 class DBGetBatchList:
     @classmethod
@@ -181,20 +176,18 @@ class DBGetBatchList:
 
         out_list = []
         for d in out_batches:
-            item = DBItem()
-            item.item = d
-            out_list.append(item)
+            out_list.append(DBItem(d))
 
         return (out_list,)
 
 NODE_CLASS_MAPPINGS = {
     "DBLoadData //DataBeast": DBLoadData,
-    "DBGetValue //DataBeast": DBGetValue,
+    "DBGetItem //DataBeast": DBGetItem,
     "DBGetBatchList //DataBeast": DBGetBatchList
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "DBLoadData //DataBeast": "DB Load Data",
-    "DBGetValue //DataBeast": "DB Get Value",
+    "DBGetItem //DataBeast": "DB Get Item",
     "DBGetBatchList //DataBeast": "DB Get Batch List",
 }
